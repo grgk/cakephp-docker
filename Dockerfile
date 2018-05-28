@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install opcache intl pdo_mysql mbstring bcmath
 
-RUN npm install apidoc -g
+RUN npm install apidoc -g && npm install apidoc-swagger -g
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 RUN export TERM=xterm
