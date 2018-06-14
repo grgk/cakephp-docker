@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.2-fpm
 
 LABEL maintainer="gfx@karpiak.pl"
 
@@ -21,6 +21,12 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
 && npm install apidoc -g \
 && npm install apidoc-swagger -g
+
+RUN yes | pecl install xdebug \
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_connect_back=On" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 RUN export TERM=xterm \
 && echo 'alias ll="ls -la"' >> ~/.bashrc
